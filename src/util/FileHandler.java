@@ -1,52 +1,69 @@
 package util;
 
+import model.Warga;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Warga;
-import model.UserRole;
-
-
-// This class is a placeholder for file handling utilities.
-
 public class FileHandler {
 
-    private static final String NAMA_FILE = "warga.txt";
-
-    // Fungsi menyimpan semua data warga ke file
-    public static void simpanDataWarga(List<Warga> daftarWarga) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(NAMA_FILE))) {
-            for (Warga w : daftarWarga) {
-                writer.write(w.toString());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Gagal menyimpan data: " + e.getMessage());
-        }
-    }
-
-    // Fungsi membaca data dari file ke dalam list warga
-    public static List<Warga> bacaDataWarga() {
+    public static List<Warga> bacaDataWarga(String filePath) {
         List<Warga> daftarWarga = new ArrayList<>();
 
-        File file = new File(NAMA_FILE);
-        if (!file.exists()) {
-            return daftarWarga; // jika file belum ada, kembalikan list kosong
-        }
+        try {
+            File file = new File(filePath);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(NAMA_FILE))) {
-            String baris;
-            while ((baris = reader.readLine()) != null) {
-                Warga warga = Warga.fromString(baris);
-                if (warga != null) {
-                    daftarWarga.add(warga);
+            // Jika file tidak ada, return empty list
+            if (!file.exists()) {
+                System.out.println("File " + filePath + " tidak ditemukan. Menunggu data dari file yang ada.");
+                return daftarWarga; // Return empty list
+            }
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    line = line.trim();
+                    if (!line.isEmpty()) {
+                        Warga warga = Warga.fromString(line);
+                        if (warga != null) {
+                            daftarWarga.add(warga);
+                        }
+                    }
                 }
             }
         } catch (IOException e) {
-            System.out.println("Gagal membaca data: " + e.getMessage());
+            System.err.println("Error membaca file: " + e.getMessage());
+            return new ArrayList<>(); // Return empty list on error
         }
 
         return daftarWarga;
+    }
+
+    public static boolean simpanDataWarga(String filePath, List<Warga> daftarWarga) {
+        try {
+            File file = new File(filePath);
+
+            // Cek apakah file exists, jika tidak return false
+            if (!file.exists()) {
+                System.err.println("File " + filePath + " tidak ditemukan!");
+                return false;
+            }
+
+            try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
+                for (Warga warga : daftarWarga) {
+                    writer.println(warga.toString());
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            System.err.println("Error menyimpan file: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean tambahWarga(String filePath, Warga warga) {
+        List<Warga> daftarWarga = bacaDataWarga(filePath);
+        daftarWarga.add(warga);
+        return simpanDataWarga(filePath, daftarWarga);
     }
 }

@@ -1,0 +1,4 @@
+Admin RT|1234567890123456|Jl. RT No. 1|A1|081234567890|Milik Sendiri|admin|admin123|ADMIN
+Budi Santoso|3201012345670001|Jl. Mawar No. 5|B2|081234567891|Milik Sendiri|budi|budi123|WARGA
+Siti Aminah|3201012345670002|Jl. Melati No. 3|A3|081234567892|Kontrak|siti|siti123|WARGA
+Rainard Zulfan|112233445566778899|Jl. Ke hatimu|goblok|08123456789|gak punya|rainard|rainard123|WARGA
