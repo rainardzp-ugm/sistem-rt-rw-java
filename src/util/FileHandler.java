@@ -1,9 +1,9 @@
 package util;
 
-import model.Warga;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import model.Warga;
 
 public class FileHandler {
 
@@ -13,9 +13,16 @@ public class FileHandler {
         try {
             File file = new File(filePath);
 
-            // Jika file tidak ada, return empty list
+            // Jika file tidak ada, buat file kosong
             if (!file.exists()) {
-                System.out.println("File " + filePath + " tidak ditemukan. Menunggu data dari file yang ada.");
+                // Create directory structure if it doesn't exist
+                File parentDir = file.getParentFile();
+                if (parentDir != null && !parentDir.exists()) {
+                    parentDir.mkdirs();
+                }
+                
+                file.createNewFile();
+                System.out.println("File " + filePath + " tidak ditemukan. File baru dibuat.");
                 return daftarWarga; // Return empty list
             }
 
@@ -42,11 +49,16 @@ public class FileHandler {
     public static boolean simpanDataWarga(String filePath, List<Warga> daftarWarga) {
         try {
             File file = new File(filePath);
+            
+            // Create directory structure if it doesn't exist
+            File parentDir = file.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
+            }
 
-            // Cek apakah file exists, jika tidak return false
+            // Create file if it doesn't exist
             if (!file.exists()) {
-                System.err.println("File " + filePath + " tidak ditemukan!");
-                return false;
+                file.createNewFile();
             }
 
             try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
@@ -63,6 +75,15 @@ public class FileHandler {
 
     public static boolean tambahWarga(String filePath, Warga warga) {
         List<Warga> daftarWarga = bacaDataWarga(filePath);
+        
+        // Check if username already exists
+        for (Warga w : daftarWarga) {
+            if (w.getUsername().equals(warga.getUsername())) {
+                System.err.println("Username " + warga.getUsername() + " sudah ada!");
+                return false;
+            }
+        }
+        
         daftarWarga.add(warga);
         return simpanDataWarga(filePath, daftarWarga);
     }

@@ -1,13 +1,12 @@
 package auth;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.Warga;
 import util.FileHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LoginManager {
-    private static final String DEFAULT_FILE_PATH = "src/data/warga.txt";
+    private static final String DEFAULT_FILE_PATH = "src\\data\\warga.txt";
     private String filePath;
     private List<Warga> daftarWarga;
 
