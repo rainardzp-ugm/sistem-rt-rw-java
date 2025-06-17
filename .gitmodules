@@ -1,0 +1,3 @@
+[submodule "SistemRTRW"]
+    path = SistemRTRW
+    url = https://github.com/rainardzp-ugm/sistem-rt-rw-java/SistemRTRW.git
