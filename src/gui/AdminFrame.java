@@ -324,26 +324,26 @@ public class AdminFrame extends JFrame {
     
     private void setupEventHandlers() {
         if (refreshButton != null) {
-            refreshButton.addActionListener(_ -> {
+            refreshButton.addActionListener(__ -> {
                 loadWargaData();
                 showNotification("Data berhasil direfresh!", SUCCESS_COLOR);
             });
         }
 
         if (addButton != null) {
-            addButton.addActionListener(_ -> showAddWargaDialog());
+            addButton.addActionListener(__ -> showAddWargaDialog());
         }
         
         if (editButton != null) {
-            editButton.addActionListener(_ -> editSelectedWarga());
+            editButton.addActionListener(__ -> editSelectedWarga());
         }
         
         if (deleteButton != null) {
-            deleteButton.addActionListener(_ -> deleteSelectedWarga());
+            deleteButton.addActionListener(__ -> deleteSelectedWarga());
         }
 
         if (logoutButton != null) {
-            logoutButton.addActionListener(_ -> {
+            logoutButton.addActionListener(__ -> {
                 int option = JOptionPane.showConfirmDialog(this, 
                     "Apakah Anda yakin ingin logout?", "Konfirmasi Logout", 
                     JOptionPane.YES_NO_OPTION);
@@ -433,7 +433,7 @@ public class AdminFrame extends JFrame {
         JButton saveButton = createModernButton("Simpan", SUCCESS_COLOR);
         JButton cancelButton = createModernButton("Batal", ERROR_COLOR);
 
-        saveButton.addActionListener(_ -> {
+        saveButton.addActionListener(__ -> {
             if (namaField.getText().trim().isEmpty() || 
                 nikField.getText().trim().isEmpty() ||
                 usernameField.getText().trim().isEmpty() ||
@@ -463,7 +463,7 @@ public class AdminFrame extends JFrame {
             }
         });
 
-        cancelButton.addActionListener(_ -> dialog.dispose());
+        cancelButton.addActionListener(__ -> dialog.dispose());
 
         buttonPanel.add(saveButton);
         buttonPanel.add(cancelButton);
